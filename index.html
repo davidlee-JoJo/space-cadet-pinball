@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>太空彈珠台</title>
+<style>
+html,body{margin:0;height:100%;background:#05050f;overflow:hidden;touch-action:none;overscroll-behavior:none}
+body{display:flex;align-items:center;justify-content:center;-webkit-user-select:none;user-select:none}
+#wrap{position:relative}
+canvas#game{display:block;background:#0b0b23;border-radius:8px}
+#hud{position:absolute;top:0;left:0;width:100%;display:flex;justify-content:space-between;background:rgba(0,0,0,.5);color:#fff;font:monospace}
+#overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.7);color:#fff;text-align:center}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="game" width="480" height="800"></canvas>
+  <div id="hud"><span id="score">SCORE 0</span><span id="balls">BALL 3</span><span id="high">HIGH 0</span></div>
+  <div id="overlay" hidden></div>
+</div>
+<script src="physics.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
