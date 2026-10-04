@@ -10,6 +10,7 @@ let state = 'title';
 let charge = 0;
 let charging = false;
 let acc = 0;
+let stuckT = 0;
 let score = 0;
 let balls = 3;
 let high = Number(localStorage.getItem('pinball_high') || 0);
@@ -80,6 +81,7 @@ function startGame() {
   updateHUD();
   resetBall();
   charge = 0;
+  stuckT = 0;
   state = 'aiming';
   hideOverlay();
 }
@@ -125,6 +127,7 @@ window.addEventListener('keyup', (e) => {
       charging = false;
       launch(charge);
       charge = 0;
+      stuckT = 0;
       state = 'playing';
     }
     return;
@@ -172,6 +175,7 @@ function pointerRelease(e) {
   charging = false;
   launch(charge);
   charge = 0;
+  stuckT = 0;
   state = 'playing';
 }
 
@@ -213,6 +217,16 @@ function update(dt) {
         state = 'gameover';
       }
       return;
+    }
+    const sp = Math.hypot(BALL.vx, BALL.vy);
+    if (sp < 25 && !ballNearFlipper(20)) stuckT += dt;
+    else stuckT = 0;
+    if (stuckT > 2) {
+      stuckT = 0;
+      resetBall();
+      charge = 0;
+      state = 'aiming';
+      addPop(240, 420, '卡住！送回發射道');
     }
     for (const ev of PHYS_EVENTS) {
       if (ev.type === 'bumper') { score += 100; addPop(ev.x, ev.y, '+100'); }

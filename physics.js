@@ -238,3 +238,13 @@ function launch(charge) {
 function inLauncherLane(x) {
   return x > 400;
 }
+
+function ballNearFlipper(margin) {
+  for (let i = 0; i < FLIPPERS.length; i++) {
+    const f = FLIPPERS[i];
+    const p = closestPointOnSeg(BALL.x, BALL.y, flipperSeg(f));
+    const dx = BALL.x - p.x, dy = BALL.y - p.y;
+    if (Math.sqrt(dx * dx + dy * dy) < BALL.r + margin) return true;
+  }
+  return false;
+}
